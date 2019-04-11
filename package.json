@@ -1,7 +1,7 @@
 {
   "name": "Library-Exercice",
-  "version": "0.2.0",
-  "private": true,
+  "version": "0.0.1",
+  "private": false,
   "dependencies": {
     "firebase": "^5.6.0",
     "react": "^16.6.3",
