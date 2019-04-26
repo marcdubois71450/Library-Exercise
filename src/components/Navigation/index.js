@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import './Navigation.css';
 
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
@@ -13,37 +14,43 @@ const Navigation = ({ authUser }) =>
     <NavigationNonAuth />
   );
 
+
+
+
+
 const NavigationAuth = ({ authUser }) => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.HOME}>Home</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
-    </li>
+
+
+  <div>
+    <div className="menu-title">
+      <Link className='some-value'  to={ROUTES.LANDING}>Accueil</Link>
+    </div>
+    <div className="menu-title">
+      <Link className='some-value'  to={ROUTES.HOME}>Nos Livres</Link>
+    </div>
+    <div className="menu-title">
+      <Link className='some-value' to={ROUTES.ACCOUNT}>Mon Compte</Link>
+    </div>
     {!!authUser.roles[ROLES.ADMIN] && (
-      <li>
-        <Link to={ROUTES.ADMIN}>Admin</Link>
-      </li>
+      <div className="menu-title">
+        <Link className='some-value' to={ROUTES.ADMIN}>Bibliothécaire</Link>
+      </div>
     )}
-    <li>
+    <div className="menu-title">
       <SignOutButton />
-    </li>
-  </ul>
+    </div>
+  </div>
 );
 
 const NavigationNonAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
-  </ul>
+  <div>
+  <div className="menu-title">
+      <Link className='some-value' to={ROUTES.LANDING}>Accueil</Link>
+    </div>
+    <div className="menu-title">
+      <Link className='some-value' to={ROUTES.SIGN_IN}>Se Connecter</Link>
+    </div>
+  </div>
 );
 
 const mapStateToProps = state => ({

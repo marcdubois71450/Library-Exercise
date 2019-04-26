@@ -27,28 +27,27 @@ const withEmailVerification = Component => {
 
     render() {
       return needsEmailVerification(this.props.authUser) ? (
-        <div>
+        <div className="signin">
+          <div className="form-sigin">
           {this.state.isSent ? (
             <p>
-              E-Mail confirmation sent: Check you E-Mails (Spam folder
-              included) for a confirmation E-Mail. Refresh this page
-              once you confirmed your E-Mail.
+              Confirmation de l'e-mail envoyée: vérifiez votre courrier électronique (dossier de courrier indésirable inclus) pour un e-mail de confirmation. Actualisez cette page une fois que vous avez confirmé votre courrier électronique.
             </p>
           ) : (
             <p>
-              Verify your E-Mail: Check you E-Mails (Spam folder
-              included) for a confirmation E-Mail or send another
-              confirmation E-Mail.
+            Vérifiez votre courrier électronique: Vérifiez vos courriels (dossier de courrier indésirable inclus) pour un courrier électronique de confirmation ou envoyez un autre courrier électronique de confirmation.
             </p>
           )}
 
           <button
+          className="input-submit"
             type="button"
             onClick={this.onSendEmailVerification}
             disabled={this.state.isSent}
           >
-            Send confirmation E-Mail
+            Renvoyez le mail de confirmation
           </button>
+          </div>
         </div>
       ) : (
         <Component {...this.props} />

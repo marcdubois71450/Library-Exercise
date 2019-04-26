@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import './Account.css';
 
 import { withAuthorization, withEmailVerification } from '../Session';
 import { withFirebase } from '../Firebase';
@@ -13,25 +14,30 @@ const SIGN_IN_METHODS = [
     provider: null,
   },
   {
-    id: 'google.com',
+    id: 'Google.com',
     provider: 'googleProvider',
   },
   {
-    id: 'facebook.com',
+    id: 'Facebook.com',
     provider: 'facebookProvider',
   },
   {
-    id: 'twitter.com',
+    id: 'Twitter.com',
     provider: 'twitterProvider',
   },
 ];
 
 const AccountPage = ({ authUser }) => (
-  <div>
-    <h1>Account: {authUser.email}</h1>
+  <div className="account">
+  <div className="form-account">
+    <div className="form-title">Compte: {authUser.email}</div>
     <PasswordForgetForm />
+    <br/>
+    <br/>
+    <div>Changer de mot de passe :</div>
     <PasswordChangeForm />
     <LoginManagement authUser={authUser} />
+    </div>
   </div>
 );
 
@@ -89,7 +95,8 @@ class LoginManagementBase extends Component {
 
     return (
       <div>
-        Sign In Methods:
+      <br/>
+        Méthodes de connection:
         <ul>
           {SIGN_IN_METHODS.map(signInMethod => {
             const onlyOneLeft = activeSignInMethods.length === 1;
@@ -135,18 +142,20 @@ const SocialLoginToggle = ({
 }) =>
   isEnabled ? (
     <button
+      className="input-submit"
       type="button"
       onClick={() => onUnlink(signInMethod.id)}
       disabled={onlyOneLeft}
     >
-      Deactivate {signInMethod.id}
+      Désactiver {signInMethod.id}
     </button>
   ) : (
     <button
+    className="input-submit"
       type="button"
       onClick={() => onLink(signInMethod.provider)}
     >
-      Link {signInMethod.id}
+      Associer {signInMethod.id}
     </button>
   );
 
@@ -183,31 +192,36 @@ class DefaultLoginToggle extends Component {
 
     return isEnabled ? (
       <button
+        className="input-submit"
         type="button"
         onClick={() => onUnlink(signInMethod.id)}
         disabled={onlyOneLeft}
       >
-        Deactivate {signInMethod.id}
+        Désactiver {signInMethod.id}
       </button>
     ) : (
       <form onSubmit={this.onSubmit}>
         <input
+          className="input-form"
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
           type="password"
-          placeholder="New Password"
+          placeholder="Nouveau Mot de passe"
         />
+        <br/>
         <input
+          className="input-form"
           name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
           type="password"
-          placeholder="Confirm New Password"
+          placeholder="Confirmer nouveau Mot de passe"
         />
+        <br/>
 
-        <button disabled={isInvalid} type="submit">
-          Link {signInMethod.id}
+        <button className="input-submit" disabled={isInvalid} type="submit">
+          Associer {signInMethod.id}
         </button>
       </form>
     );

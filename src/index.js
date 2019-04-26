@@ -10,11 +10,14 @@ import App from './components/App';
 import Firebase, { FirebaseContext } from './components/Firebase';
 
 ReactDOM.render(
+  <div id="outer-container">
+
   <Provider store={store}>
     <FirebaseContext.Provider value={new Firebase()}>
       <App />
     </FirebaseContext.Provider>
-  </Provider>,
+  </Provider>
+  </div>,
   document.getElementById('root'),
 );
 

@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import './SignUp.css';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
 const SignUpPage = () => (
-  <div>
-    <h1>SignUp</h1>
+  <div className="signup">
+    <div className="form-signup">
+    <div className="form-title">Créer un compte</div>
     <SignUpForm />
+    </div>
   </div>
 );
 
@@ -101,35 +104,44 @@ class SignUpFormBase extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <input
+          className="input-form"
           name="username"
           value={username}
           onChange={this.onChange}
           type="text"
           placeholder="Full Name"
         />
+        <br/>
         <input
+          className="input-form"
           name="email"
           value={email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
+        <br/>
         <input
+          className="input-form"
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
           type="password"
           placeholder="Password"
         />
+        <br/>
         <input
+          className="input-form"
           name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
           type="password"
           placeholder="Confirm Password"
         />
+        <br/>
+        <br/>
         <label>
-          Admin:
+          Bibliothecaire: 
           <input
             name="isAdmin"
             type="checkbox"
@@ -137,8 +149,9 @@ class SignUpFormBase extends Component {
             onChange={this.onChangeCheckbox}
           />
         </label>
-        <button disabled={isInvalid} type="submit">
-          Sign Up
+        <br/>
+        <button className="input-submit" disabled={isInvalid} type="submit">
+          S'inscrire
         </button>
 
         {error && <p>{error.message}</p>}
@@ -149,7 +162,7 @@ class SignUpFormBase extends Component {
 
 const SignUpLink = () => (
   <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+    Vous n'avez pas de compte ? <Link to={ROUTES.SIGN_UP}>S'inscrire</Link>
   </p>
 );
 

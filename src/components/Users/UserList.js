@@ -37,27 +37,35 @@ class UserList extends Component {
 
     return (
       <div>
-        <h2>Users</h2>
-        {loading && <div>Loading ...</div>}
+
         <ul>
+        <table>
+
+        <thead>
+               <tr>
+                 <th>Email</th>
+                 <th>Nom</th>
+                 <th>Plus</th>
+               </tr>
+             </thead>
+        <tbody>
+
+        {loading &&
+          <tr>
+            <td data-column="Email">Chargement...</td>
+            <td data-column="Nom">Chargement...</td>
+          </tr>
+        }
           {users.map(user => (
-            <li key={user.uid}>
-              <span>
-                <strong>ID:</strong> {user.uid}
-              </span>
-              <span>
-                <strong>E-Mail:</strong> {user.email}
-              </span>
-              <span>
-                <strong>Username:</strong> {user.username}
-              </span>
-              <span>
-                <Link to={`${ROUTES.ADMIN}/${user.uid}`}>
-                  Details
-                </Link>
-              </span>
-            </li>
+              <tr>
+                <td data-column="Email">{user.email}</td>
+                <td data-column="Nom">{user.username}</td>
+                <td className="detail" ><Link className="detail-text" to={`${ROUTES.ADMIN}/${user.uid}`}>Details</Link></td>
+              </tr>
           ))}
+          </tbody>
+          </table>
+
         </ul>
       </div>
     );

@@ -6,16 +6,20 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import './SignIn.css';
+
 
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm />
-    <SignInGoogle />
-    <SignInFacebook />
-    <SignInTwitter />
-    <PasswordForgetLink />
-    <SignUpLink />
+  <div className="signin">
+    <div className="form-sigin">
+      <div className="form-title">Connectez-vous</div>
+      <SignInForm />
+      <SignInGoogle />
+      <SignInFacebook />
+      <SignInTwitter />
+      <PasswordForgetLink />
+      <SignUpLink />
+    </div>
   </div>
 );
 
@@ -70,21 +74,25 @@ class SignInFormBase extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <input
+          className="input-form"
           name="email"
           value={email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
+        <br/>
         <input
+          className="input-form"
           name="password"
           value={password}
           onChange={this.onChange}
           type="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
-          Sign In
+        <br/>
+        <button className="input-submit" disabled={isInvalid} type="submit">
+          Se connecter
         </button>
 
         {error && <p>{error.message}</p>}
@@ -131,7 +139,7 @@ class SignInGoogleBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
+        <button type="submit" className="input-submit-google">Se connecter avec Google</button>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -177,7 +185,7 @@ class SignInFacebookBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Facebook</button>
+        <button type="submit" className="input-submit-fb">Se connecter avec Facebook</button>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -223,7 +231,7 @@ class SignInTwitterBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Twitter</button>
+        <button type="submit" className="input-submit-twitter">Se connecter avec Twitter</button>
 
         {error && <p>{error.message}</p>}
       </form>
