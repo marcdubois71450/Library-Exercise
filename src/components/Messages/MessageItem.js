@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as ROLES from '../../constants/roles';
+
 
 class MessageItem extends Component {
   constructor(props) {
@@ -6,68 +8,102 @@ class MessageItem extends Component {
 
     this.state = {
       editMode: false,
-      editText: this.props.message.text,
+      text: this.props.message.text,
+      author: this.props.message.author
     };
   }
 
-  onToggleEditMode = () => {
-    this.setState(state => ({
-      editMode: !state.editMode,
-      editText: this.props.message.text,
-    }));
-  };
+onEditMessage(messageUid){
+  this.setState({editMode: true});
+    }
 
-  onChangeEditText = event => {
-    this.setState({ editText: event.target.value });
-  };
+onSaveMessageNow(text, author, uid){
+  this.props.onSaveMessage(text, author, uid);
+  this.setState({editMode: false});
+}
 
-  onSaveEditText = () => {
-    this.props.onEditMessage(this.props.message, this.state.editText);
-
-    this.setState({ editMode: false });
-  };
+    onChangeText = event => {
+      this.setState({ text: event.target.value });
+    };
+    onChangeAuthor = event => {
+      this.setState({ author: event.target.value });
+    };
 
   render() {
-    const { authUser, message, onRemoveMessage } = this.props;
-    const { editMode, editText } = this.state;
+    const { authUser, message, onRemoveMessage, onFollowMessage, onUnFollowMessage } = this.props;
+
+
+    const Button = () => {
+
+      if (!!authUser.roles[ROLES.ADMIN]) { return (
+        <td data-column="Supprimer"  className="delete" onClick={() => onRemoveMessage(message.uid)}>
+        Supprimer
+        </td>
+      ) } else {
+          if (message.subscriber) {
+            if (message.subscriber === authUser.uid) { return (
+              <td data-column="Supprimer"  className="delete" onClick={() => onUnFollowMessage(message.uid)}>
+              Rendre
+              </td>
+          )  } else { return (
+              <td data-column="Supprimer">
+              Non Disponible
+              </td>
+          )  }
+        } else { return (
+            <td data-column="Supprimer"  className="delete" onClick={() => onFollowMessage(message.uid, authUser)}>
+            Emprunter
+            </td>
+        )  }
+      }
+    };
+
+
+
+    const Editer = () => {
+      if (this.state.editMode) {
+        return (
+          <td data-column="Editer"  className="delete" onClick={() => this.onSaveMessageNow(this.state.text, this.state.author, message.uid)}>
+            Enregistrer
+          </td>
+        )
+      } else {
+        return (
+          <td data-column="Editer"  className="delete" onClick={() => this.onEditMessage(message.uid)}>
+            Editer
+          </td>
+        )
+      }
+      };
+
 
     return (
-      <li>
-        {editMode ? (
+      <tr>
+        <td data-column="Titre">{this.state.editMode ? (
           <input
-            type="text"
-            value={editText}
-            onChange={this.onChangeEditText}
-          />
-        ) : (
-          <span>
-            <strong>{message.userId}</strong> {message.text}
-            {message.editedAt && <span>(Edited)</span>}
-          </span>
-        )}
-
-        {authUser.uid === message.userId && (
-          <span>
-            {editMode ? (
-              <span>
-                <button onClick={this.onSaveEditText}>Save</button>
-                <button onClick={this.onToggleEditMode}>Reset</button>
-              </span>
-            ) : (
-              <button onClick={this.onToggleEditMode}>Edit</button>
-            )}
-
-            {!editMode && (
-              <button
-                type="button"
-                onClick={() => onRemoveMessage(message.uid)}
-              >
-                Delete
-              </button>
-            )}
-          </span>
-        )}
-      </li>
+          className="input-edit"
+          type="text"
+          value={this.state.text}
+          onChange={this.onChangeText}
+          placeholder="Titre"
+          />) : (message.text)}
+        </td>
+        <td data-column="Auteur">{this.state.editMode ? (
+          <input
+          className="input-edit"
+          type="text"
+          value={this.state.author}
+          onChange={this.onChangeAuthor}
+          placeholder="Titre"
+          />) : (message.author)}</td>
+        {!!authUser.roles[ROLES.ADMIN] &&
+          <Editer />
+      }
+        <Button />
+        {(!!authUser.roles[ROLES.ADMIN] && message.subscriber) &&
+          <td data-column="User">{message.email}</td>
+        }
+      </tr>
     );
   }
 }

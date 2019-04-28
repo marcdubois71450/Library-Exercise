@@ -14,15 +14,15 @@ const SIGN_IN_METHODS = [
     provider: null,
   },
   {
-    id: 'Google.com',
+    id: 'google.com',
     provider: 'googleProvider',
   },
   {
-    id: 'Facebook.com',
+    id: 'facebook.com',
     provider: 'facebookProvider',
   },
   {
-    id: 'Twitter.com',
+    id: 'twitter.com',
     provider: 'twitterProvider',
   },
 ];

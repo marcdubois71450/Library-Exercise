@@ -44,26 +44,28 @@ class UserItem extends Component {
 
     return (
       <div>
-        <h2>User ({this.props.match.params.id})</h2>
-        {loading && <div>Loading ...</div>}
+        <h2>Utilisateur ({this.props.match.params.id})</h2>
+        {loading && <div>Chargement ...</div>}
 
         {user && (
           <div>
-            <span>
-              <strong>ID:</strong> {user.uid}
-            </span>
+          <br/>
+
             <span>
               <strong>E-Mail:</strong> {user.email}
             </span>
+            <br/>
             <span>
               <strong>Username:</strong> {user.username}
             </span>
+            <br/>
             <span>
               <button
+                className="input-submit"
                 type="button"
                 onClick={this.onSendPasswordResetEmail}
               >
-                Send Password Reset
+                Réinitialiser mot de passe
               </button>
             </span>
           </div>

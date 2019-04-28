@@ -4,19 +4,19 @@ import './landing.css';
 const Landing = () => (
   <div className="landing">
 
-    <div class="component">
+    <div className="component">
     <div className="hello-message">Bienvenue dans notre Bibliotheque ! Bonne lecture et bonne journée !</div>
 
-				<ul class="align">
+				<ul className="align">
 
 					<li>
-						<figure class='book'>
+						<figure className='book'>
 
 
-							<ul class='hardcover_front'>
+							<ul className='hardcover_front'>
 								<li>
-									<div class="coverDesign custom">
-										<span class="ribbon">FUN</span>
+									<div className="coverDesign custom">
+										<span className="ribbon">FUN</span>
 										<h1>Custom</h1>
 										<p>Book Cover</p>
 									</div>
@@ -25,10 +25,10 @@ const Landing = () => (
 							</ul>
 
 
-							<ul class='page'>
+							<ul className='page'>
 								<li></li>
 								<li>
-									<a class="btn" href="/home">Voir les livres</a>
+									<a className="btn" href="/home">Voir les livres</a>
 								</li>
 								<li></li>
 								<li></li>
@@ -36,11 +36,11 @@ const Landing = () => (
 							</ul>
 
 
-							<ul class='hardcover_back'>
+							<ul className='hardcover_back'>
 								<li></li>
 								<li></li>
 							</ul>
-							<ul class='book_spine'>
+							<ul className='book_spine'>
 								<li></li>
 								<li></li>
 							</ul>

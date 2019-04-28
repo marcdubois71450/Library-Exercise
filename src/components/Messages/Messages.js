@@ -4,6 +4,8 @@ import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import MessageList from './MessageList';
+import * as ROLES from '../../constants/roles';
+
 
 class Messages extends Component {
   constructor(props) {
@@ -11,11 +13,14 @@ class Messages extends Component {
 
     this.state = {
       text: '',
+      author: '',
       loading: false,
     };
   }
 
   componentDidMount() {
+    this.props.onSetMessagesLimit(this.props.limit + 200);
+
     if (!this.props.messages.length) {
       this.setState({ loading: true });
     }
@@ -48,74 +53,106 @@ class Messages extends Component {
   onChangeText = event => {
     this.setState({ text: event.target.value });
   };
+  onChangeAuthor = event => {
+    this.setState({ author: event.target.value });
+  };
 
   onCreateMessage = (event, authUser) => {
     this.props.firebase.messages().push({
       text: this.state.text,
+      author: this.state.author,
       userId: authUser.uid,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
     });
 
-    this.setState({ text: '' });
+    this.setState({ text: '', author:'' });
 
     event.preventDefault();
   };
 
-  onEditMessage = (message, text) => {
-    const { uid, ...messageSnapshot } = message;
+  onFollowMessage = (uid, authUser) => {
+    console.log(authUser.email);
+    var newData={
+        subscriber: authUser.uid,
+        email: authUser.email
+    }
+    this.props.firebase.message(uid).update(newData);
+  };
 
-    this.props.firebase.message(message.uid).set({
-      ...messageSnapshot,
-      text,
-      editedAt: this.props.firebase.serverValue.TIMESTAMP,
-    });
+  onSaveMessage = (text, author, uid) => {
+    var newData={
+        text: text,
+        author: author
+    }
+    this.props.firebase.message(uid).update(newData);
+  };
+
+  onUnFollowMessage = (uid) => {
+    var newData={
+        subscriber: null,
+        email: null
+    }
+    this.props.firebase.message(uid).update(newData);
+
   };
 
   onRemoveMessage = uid => {
     this.props.firebase.message(uid).remove();
   };
 
+
   onNextPage = () => {
-    this.props.onSetMessagesLimit(this.props.limit + 5);
   };
 
   render() {
     const { messages } = this.props;
-    const { text, loading } = this.state;
+    const { text, author, loading } = this.state;
 
     return (
       <div>
-        {!loading && messages && (
-          <button type="button" onClick={this.onNextPage}>
-            More
-          </button>
-        )}
 
-        {loading && <div>Loading ...</div>}
+        {loading && <div>Chargement des livres ...</div>}
 
         {messages && (
           <MessageList
             authUser={this.props.authUser}
             messages={messages}
-            onEditMessage={this.onEditMessage}
+            onUnFollowMessage={this.onUnFollowMessage}
+            onFollowMessage={this.onFollowMessage}
             onRemoveMessage={this.onRemoveMessage}
+            onSaveMessage={this.onSaveMessage}
           />
         )}
 
         {!messages && <div>There are no messages ...</div>}
 
+
+        {!!this.props.authUser.roles[ROLES.ADMIN] && (
         <form
           onSubmit={event =>
             this.onCreateMessage(event, this.props.authUser)
           }
         >
           <input
+            className="input-form"
             type="text"
             value={text}
             onChange={this.onChangeText}
+            placeholder="Titre"
+
           />
-          <button type="submit">Send</button>
+          <br/>
+          <input
+            className="input-form"
+            type="text"
+            value={author}
+            onChange={this.onChangeAuthor}
+            placeholder="Auteur"
+          />
+          <br/>
+          <button className="input-submit" type="submit">Ajouter le livre</button>
         </form>
+      )}
       </div>
     );
   }

@@ -6,11 +6,11 @@ import { withAuthorization, withEmailVerification } from '../Session';
 import Messages from '../Messages';
 
 const HomePage = () => (
-  <div>
-    <div>Home Page</div>
-    <p>The Home Page is accessible by every signed in user.</p>
-
+  <div className="home">
+    <div className="home-center">
+    <div className="home-title">Nos Livres</div>
     <Messages />
+    </div>
   </div>
 );
 

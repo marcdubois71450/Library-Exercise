@@ -37,10 +37,8 @@ class UserList extends Component {
 
     return (
       <div>
-
         <ul>
         <table>
-
         <thead>
                <tr>
                  <th>Email</th>
