@@ -1,6 +1,6 @@
-# Marc Dubois Library Exercice Infomaniak
+# Marc Dubois Library Exercice
 
-Library Exercice Infomaniak!
+Library Exercice!
 
 ### Project recovery
 
